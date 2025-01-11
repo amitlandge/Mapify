@@ -26,6 +26,22 @@ if (navigator.geolocation) {
       }).addTo(map);
 
       L.marker(coords).addTo(map).bindPopup("Your Location").openPopup();
+      map.on("click", (event) => {
+        const { lat, lng } = event.latlng;
+        L.marker([lat, lng])
+          .addTo(map)
+          .bindPopup(
+            L.popup({
+              autoClose: false,
+              closeOnClick: false,
+              maxWidth: 250,
+              minWidth: 200,
+              className: "running-popup",
+            })
+          )
+          .setPopupContent("Visit")
+          .openPopup();
+      });
     },
     () => {
       alert("Could not get location");
