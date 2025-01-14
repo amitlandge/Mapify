@@ -20,7 +20,7 @@ class App {
   constructor() {
     this._getPosition();
     this._getLocalStorage();
-    console.log(this);
+
     form.addEventListener("submit", this._newTravel.bind(this));
     containerWorkouts.addEventListener("click", this.__getPointer.bind(this));
   }
@@ -51,7 +51,7 @@ class App {
   }
   _showMarker(event) {
     this.#eventEl = event;
-    console.log(event);
+
     form.classList.remove("hidden");
     inputDistance.focus();
   }
@@ -67,13 +67,13 @@ class App {
       alert("Please Enter Valid Places");
       return;
     }
-    console.log(isValid(duration, distance));
+
     if (isValid(duration, distance)) {
       alert("Please Enter Valid Input");
       return;
     }
     const travel = new Travel([lat, lng], type, distance, duration, places);
-    console.log(travel);
+
     this.#travelData.push(travel);
     this._renderMarker(travel);
     this._showTravelData(travel);
@@ -98,7 +98,7 @@ class App {
   _showTravelData(item) {
     let element = "";
     console.log(this.#travelData);
-    console.log(element);
+
     element = `
          <li class="workout workout--running" id=${item.id} >
           <h2 class="workout__title"> ${item.description}</h2>
@@ -130,16 +130,15 @@ class App {
 
     const array1 = [...this.#travelData];
 
-    const workout = array1.find(
+    const travel = array1.find(
       (work) => work?.id.toString() === _id.toString()
     );
-    console.log(workout);
-    if (!workout) {
-      console.log("No matching workout data found");
+
+    if (!travel) {
       return;
     }
 
-    this.#map.setView(workout?.coords, 15, {
+    this.#map.setView(travel?.coords, 15, {
       animate: true,
       pan: {
         duration: 1,
@@ -157,7 +156,7 @@ class App {
   }
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem("travel"));
-    console.log(data);
+
     if (!data) {
       return;
     }
